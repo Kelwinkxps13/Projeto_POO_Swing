@@ -1,0 +1,6 @@
+module-info.class
+br\edu\backend\Back.class
+br\edu\principal\SecondaryController.class
+br\edu\principal\PrimaryController.class
+br\edu\bancodedados\Connection.class
+br\edu\principal\App.class
