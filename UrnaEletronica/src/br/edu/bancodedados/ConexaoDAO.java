@@ -14,5 +14,17 @@ import javax.swing.JOptionPane;
  * @author aj_un
  */
 public class ConexaoDAO {
-    
+    public Connection conexaodao(){
+        Connection conn = null;
+        
+        try {
+            String url = "jdbc:mysql://192.168.18.165:3306/urnaeletronica?user=root&passoword=";
+            conn = DriverManager.getConnection(url);
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "ConexaoDao "+erro);
+        }
+        
+        return conn;
+    }
+
 }
