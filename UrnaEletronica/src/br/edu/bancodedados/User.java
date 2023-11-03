@@ -38,7 +38,27 @@ public class User {
         this.email = email;
     }
 
-    
+    /*
+    String nome = campoNome.getText();
+        String senha = campoSenha.getText();
+        
+        PreparedStatement pstm;
+        
+        Connection conn;
+        String sql = "insert into login (nome_usuario, senha_usuario) values(?, ?)";
+        
+        conn = new ConexaoDAO().conexaodao();
+        
+        
+        try {
+            pstm = conn.prepareStatement(sql);
+            
+            
+            
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, erro);
+        }
+    */
 
     
 }
