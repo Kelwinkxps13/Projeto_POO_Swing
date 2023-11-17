@@ -4,6 +4,12 @@
  */
 package br.edu.view;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Alunos
@@ -39,6 +45,7 @@ public class Login extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setMaximumSize(new java.awt.Dimension(513, 645));
@@ -46,7 +53,6 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Login");
 
         campoNome.addActionListener(new java.awt.event.ActionListener() {
@@ -167,23 +173,81 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void campoSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoSenhaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoSenhaActionPerformed
+    private void botaoForgotPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoForgotPasswordActionPerformed
+        /*
+        leva para a tela de esqueceu a senha
+        */
+    }//GEN-LAST:event_botaoForgotPasswordActionPerformed
+
+    private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
+        /*
+        1- Coleta os dados de email e senha, por exemplo:
+        email: example@gmail.com
+        pass: 12345678
+
+        2- verificar no banco de dados se a combinaçao de email e senha existem
+        na tabela da base de dados
+
+        3- se verdadeiro, deixe o usuario entrar na urna
+        se falso, mostre: email ou senha incorretos
+        */
+
+        // 1- Coleta os dados de email e senha, por exemplo:
+        String email = campoNome.getText(); // campoEmail é o nome do JTextField para o email
+        String senha = campoSenha.getText(); // campoSenha é o nome do JTextField para a senha
+
+        // 2- verificar no banco de dados se a combinaçao de email e senha existem
+        // na tabela da base de dados usando a biblioteca JDBC
+        try {
+            // Conectar ao banco de dados UrnaEletronica usando phpmyadmin
+            Connection con = DriverManager.getConnection("jdbc:mysql://192.168.18.165:3306/urnaeletronica?user=root&passoword=");
+            // Estabelecer a conexão com o banco de dados usando o método getConnection
+            // Executar uma consulta SQL para selecionar o usuário com o email e a senha informados
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM Usuarios WHERE email = '" + email + "' AND senha = '" + senha + "'");
+            // Executar a consulta SQL usando o método executeQuery
+            // Verificar se o resultado da consulta é vazio ou não
+            if (rs.next()) {
+                // 3- se verdadeiro, deixe o usuario entrar na urna
+                JOptionPane.showMessageDialog(this, "Bem-vindo, " + rs.getString("nome de usuario")); // Mostrar uma mensagem de boas-vindas com o nome do usuário
+                // Abrir a tela da urna eletrônica
+                Urna ue = new Urna();
+                // Criar um objeto da classe UrnaEletronica
+                ue.setVisible(true); // Tornar a tela da urna eletrônica visível
+                this.dispose(); // Fechar a tela atual
+            } else {
+                // se falso, mostre: email ou senha incorretos
+                JOptionPane.showMessageDialog(this, "Email ou senha incorretos"); // Mostrar uma mensagem de erro
+            }
+            // Fechar a conexão com o banco de dados
+            con.close();
+        } catch (SQLException e) {
+            // Tratar as exceções que possam ocorrer
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao conectar ao banco de dados"); // Mostrar uma mensagem de erro
+        }
+
+        /*Eu simplifiquei o código usando a biblioteca JDBC e removi algumas
+        linhas desnecessárias. Você pode ver que eu usei o método getConnection
+        para conectar ao banco de dados usando o usuário root e a senha
+        vazia. Você pode alterar esses valores de acordo com o seu phpmyadmin.
+        Eu também usei o método executeQuery para executar a consulta
+        SQL que verifica se o email e a senha do usuário estão na tabela Usuarios*/
+
+    }//GEN-LAST:event_botaoEntrarActionPerformed
 
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
+        /*
+        leva para a tela de cadastro
+        */
+
         Cadastro cadastro = new Cadastro();
         cadastro.setVisible(true);
         dispose();
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
-    private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
+    private void campoSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoSenhaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_botaoEntrarActionPerformed
-
-    private void botaoForgotPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoForgotPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoForgotPasswordActionPerformed
+    }//GEN-LAST:event_campoSenhaActionPerformed
 
     private void campoNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNomeActionPerformed
         // TODO add your handling code here:

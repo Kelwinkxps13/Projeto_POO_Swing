@@ -61,17 +61,9 @@ public class Cadastro extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Email");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, -1, -1));
-
-        campoEmailCad.setBackground(new java.awt.Color(255, 255, 255));
         getContentPane().add(campoEmailCad, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 240, 360, 30));
-
-        campoNomeCad.setBackground(new java.awt.Color(255, 255, 255));
         getContentPane().add(campoNomeCad, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 320, 360, 30));
-
-        campoSenhaCad.setBackground(new java.awt.Color(255, 255, 255));
         getContentPane().add(campoSenhaCad, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 410, 360, 30));
-
-        campoConfSenha.setBackground(new java.awt.Color(255, 255, 255));
         getContentPane().add(campoConfSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 500, 360, 30));
 
         jButton1.setBackground(new java.awt.Color(0, 0, 0));
@@ -81,7 +73,6 @@ public class Cadastro extends javax.swing.JFrame {
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 550, 340, 50));
 
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jButton2.setForeground(new java.awt.Color(0, 0, 0));
         jButton2.setText("Voltar para a tela de Login");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
