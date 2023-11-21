@@ -240,8 +240,11 @@ public class Login extends javax.swing.JFrame {
         leva para a tela de cadastro
         */
 
-        Cadastro cadastro = new Cadastro();
-        cadastro.setVisible(true);
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Cadastro().setVisible(true);
+            }
+        });
         dispose();
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
