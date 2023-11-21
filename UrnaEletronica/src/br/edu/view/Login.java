@@ -4,6 +4,7 @@
  */
 package br.edu.view;
 
+import br.edu.bancodedados.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -192,48 +193,32 @@ public class Login extends javax.swing.JFrame {
         se falso, mostre: email ou senha incorretos
         */
 
-        // 1- Coleta os dados de email e senha, por exemplo:
-        String email = campoNome.getText(); // campoEmail é o nome do JTextField para o email
-        String senha = campoSenha.getText(); // campoSenha é o nome do JTextField para a senha
+        String email = campoNome.getText(); 
+        String senha = campoSenha.getText();
+        
 
-        // 2- verificar no banco de dados se a combinaçao de email e senha existem
-        // na tabela da base de dados usando a biblioteca JDBC
         try {
-            // Conectar ao banco de dados UrnaEletronica usando phpmyadmin
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/urnaeletronica?user=root&passoword=");
-            // Estabelecer a conexão com o banco de dados usando o método getConnection
-            // Executar uma consulta SQL para selecionar o usuário com o email e a senha informados
+            ConexaoDAO conn = new ConexaoDAO();
+            Connection con = conn.conexaodao();
+            
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM Usuarios WHERE email = '" + email + "' AND senha = '" + senha + "'");
-            // Executar a consulta SQL usando o método executeQuery
-            // Verificar se o resultado da consulta é vazio ou não
             if (rs.next()) {
-                // 3- se verdadeiro, deixe o usuario entrar na urna
-                JOptionPane.showMessageDialog(this, "Bem-vindo, " + rs.getString("nome")); // Mostrar uma mensagem de boas-vindas com o nome do usuário
-                // Abrir a tela da urna eletrônica
+                JOptionPane.showMessageDialog(this, "Bem-vindo(a) " + rs.getString("nome")+"!");
                 java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
                     new Urna().setVisible(true);
                 }
-        });
+                
+                });
+                dispose();
             } else {
-                // se falso, mostre: email ou senha incorretos
                 JOptionPane.showMessageDialog(this, "Email ou senha incorretos"); // Mostrar uma mensagem de erro
             }
-            // Fechar a conexão com o banco de dados
             con.close();
         } catch (SQLException e) {
-            // Tratar as exceções que possam ocorrer
-            
-            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao conectar ao banco de dados" + e); // Mostrar uma mensagem de erro
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao conectar ao banco de dados " + e); // Mostrar uma mensagem de erro
             e.printStackTrace();
         }
-
-        /*Eu simplifiquei o código usando a biblioteca JDBC e removi algumas
-        linhas desnecessárias. Você pode ver que eu usei o método getConnection
-        para conectar ao banco de dados usando o usuário root e a senha
-        vazia. Você pode alterar esses valores de acordo com o seu phpmyadmin.
-        Eu também usei o método executeQuery para executar a consulta
-        SQL que verifica se o email e a senha do usuário estão na tabela Usuarios*/
 
     }//GEN-LAST:event_botaoEntrarActionPerformed
 

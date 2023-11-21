@@ -13,12 +13,12 @@ import javax.swing.JOptionPane;
  *
  * @author aj_un
  */
-public class ConexaoDAO {
+public class ConexaoDAO{
     public Connection conexaodao(){
         Connection conn = null;
-        
+        // 192.168.18.165
         try {
-            String url = "jdbc:mysql://192.168.18.165:3306/urnaeletronica?user=root&passoword=";
+            String url = "jdbc:mysql://localhost:3306/urnaeletronica?user=root&passoword=";
             conn = DriverManager.getConnection(url);
         } catch (SQLException erro) {
             JOptionPane.showMessageDialog(null, "ConexaoDao "+erro);
