@@ -200,7 +200,7 @@ public class Login extends javax.swing.JFrame {
         // na tabela da base de dados usando a biblioteca JDBC
         try {
             // Conectar ao banco de dados UrnaEletronica usando phpmyadmin
-            Connection con = DriverManager.getConnection("jdbc:mysql://192.168.18.165:3306/urnaeletronica?user=root&passoword=");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/urnaeletronica?user=root&passoword=");
             // Estabelecer a conexão com o banco de dados usando o método getConnection
             // Executar uma consulta SQL para selecionar o usuário com o email e a senha informados
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM Usuarios WHERE email = '" + email + "' AND senha = '" + senha + "'");
@@ -208,12 +208,13 @@ public class Login extends javax.swing.JFrame {
             // Verificar se o resultado da consulta é vazio ou não
             if (rs.next()) {
                 // 3- se verdadeiro, deixe o usuario entrar na urna
-                JOptionPane.showMessageDialog(this, "Bem-vindo, " + rs.getString("nome de usuario")); // Mostrar uma mensagem de boas-vindas com o nome do usuário
+                JOptionPane.showMessageDialog(this, "Bem-vindo, " + rs.getString("nome")); // Mostrar uma mensagem de boas-vindas com o nome do usuário
                 // Abrir a tela da urna eletrônica
-                Urna ue = new Urna();
-                // Criar um objeto da classe UrnaEletronica
-                ue.setVisible(true); // Tornar a tela da urna eletrônica visível
-                this.dispose(); // Fechar a tela atual
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    new Urna().setVisible(true);
+                }
+        });
             } else {
                 // se falso, mostre: email ou senha incorretos
                 JOptionPane.showMessageDialog(this, "Email ou senha incorretos"); // Mostrar uma mensagem de erro
@@ -222,8 +223,9 @@ public class Login extends javax.swing.JFrame {
             con.close();
         } catch (SQLException e) {
             // Tratar as exceções que possam ocorrer
+            
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao conectar ao banco de dados" + e); // Mostrar uma mensagem de erro
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao conectar ao banco de dados"); // Mostrar uma mensagem de erro
         }
 
         /*Eu simplifiquei o código usando a biblioteca JDBC e removi algumas
