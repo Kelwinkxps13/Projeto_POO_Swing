@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import java.sql.PreparedStatement;
 
 /**
  *
@@ -177,7 +178,7 @@ public class Login extends javax.swing.JFrame {
     private void botaoForgotPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoForgotPasswordActionPerformed
         /*
         leva para a tela de esqueceu a senha
-        */
+         */
     }//GEN-LAST:event_botaoForgotPasswordActionPerformed
 
     private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
@@ -191,32 +192,33 @@ public class Login extends javax.swing.JFrame {
 
         3- se verdadeiro, deixe o usuario entrar na urna
         se falso, mostre: email ou senha incorretos
-        */
-
-        String email = campoNome.getText(); 
-        String senha = campoSenha.getText();
-        
+         */
 
         try {
-            ConexaoDAO conn = new ConexaoDAO();
-            Connection con = conn.conexaodao();
+            String email = campoNome.getText();
+            String senha = campoSenha.getText();
+
+            User objusuariodto = new User();
+            objusuariodto.setEmail(email);
+            objusuariodto.setSenha(senha);
+
+            UsuarioDAO objusuariodao = new UsuarioDAO();
+            ResultSet rsusuariodao = objusuariodao.autenticacaoUsuario(objusuariodto);
             
-            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM Usuarios WHERE email = '" + email + "' AND senha = '" + senha + "'");
-            if (rs.next()) {
-                JOptionPane.showMessageDialog(this, "Bem-vindo(a) " + rs.getString("nome")+"!");
+            if (rsusuariodao.next()) {
+                JOptionPane.showMessageDialog(null, "Bem-vindo(a) " + rsusuariodao.getString("nome") + "!");
                 java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    new Urna().setVisible(true);
-                }
-                
+                    public void run() {
+                        new Urna().setVisible(true);
+                    }
+
                 });
                 dispose();
             } else {
-                JOptionPane.showMessageDialog(this, "Email ou senha incorretos"); // Mostrar uma mensagem de erro
+                JOptionPane.showMessageDialog(null, "Email ou senha incorretos"); // Mostrar uma mensagem de erro
             }
-            con.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao conectar ao banco de dados " + e); // Mostrar uma mensagem de erro
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao conectar ao banco de dados " + e); // Mostrar uma mensagem de erro
             e.printStackTrace();
         }
 
@@ -225,7 +227,7 @@ public class Login extends javax.swing.JFrame {
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
         /*
         leva para a tela de cadastro
-        */
+         */
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -269,7 +271,7 @@ public class Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
