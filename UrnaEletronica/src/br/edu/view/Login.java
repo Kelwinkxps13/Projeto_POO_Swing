@@ -4,6 +4,13 @@
  */
 package br.edu.view;
 
+import br.edu.bancodedados.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Alunos
@@ -39,6 +46,7 @@ public class Login extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setMaximumSize(new java.awt.Dimension(513, 645));
@@ -46,7 +54,6 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Login");
 
         campoNome.addActionListener(new java.awt.event.ActionListener() {
@@ -109,7 +116,6 @@ public class Login extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(66, 66, 66)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,8 +132,9 @@ public class Login extends javax.swing.JFrame {
                         .addGap(196, 196, 196)
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(105, 105, 105)
-                        .addComponent(botaoCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(104, 104, 104)
+                        .addComponent(botaoCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -167,25 +174,68 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void campoSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoSenhaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoSenhaActionPerformed
-
-    private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
-        Cadastro cadastro = new Cadastro();
-        cadastro.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_botaoCadastrarActionPerformed
-
-    private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoEntrarActionPerformed
-
     private void botaoForgotPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoForgotPasswordActionPerformed
         ForgotPass pass = new ForgotPass();
         pass.setVisible(true);
         dispose();
     }//GEN-LAST:event_botaoForgotPasswordActionPerformed
+
+    private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
+        /*
+        1- Coleta os dados de email e senha, por exemplo:
+        email: example@gmail.com
+        pass: 12345678
+
+        2- verificar no banco de dados se a combinaçao de email e senha existem
+        na tabela da base de dados
+
+        3- se verdadeiro, deixe o usuario entrar na urna
+        se falso, mostre: email ou senha incorretos
+        */
+
+        String email = campoNome.getText(); 
+        String senha = campoSenha.getText();
+        
+
+        try {
+            ConexaoDAO conn = new ConexaoDAO();
+            Connection con = conn.conexaodao();
+            
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM Usuarios WHERE email = '" + email + "' AND senha = '" + senha + "'");
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(this, "Bem-vindo(a) " + rs.getString("nome")+"!");
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    new Urna().setVisible(true);
+                }
+                
+                });
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Email ou senha incorretos"); // Mostrar uma mensagem de erro
+            }
+            con.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao conectar ao banco de dados " + e); // Mostrar uma mensagem de erro
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_botaoEntrarActionPerformed
+
+    private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
+        
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Cadastro().setVisible(true);
+            }
+        });
+        dispose();
+    }//GEN-LAST:event_botaoCadastrarActionPerformed
+
+    private void campoSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoSenhaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoSenhaActionPerformed
 
     private void campoNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNomeActionPerformed
         // TODO add your handling code here:
