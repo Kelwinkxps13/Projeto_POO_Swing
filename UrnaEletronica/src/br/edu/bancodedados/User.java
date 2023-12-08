@@ -38,7 +38,6 @@ public class User {
         this.email = email;
     }
 
-<<<<<<< HEAD
     /*
     String nome = campoNome.getText();
         String senha = campoSenha.getText();
@@ -60,9 +59,6 @@ public class User {
             JOptionPane.showMessageDialog(null, erro);
         }
     */
-=======
-    
->>>>>>> b2e51846350cecd28786440f31539bf99e7aeba0
 
     
 }
