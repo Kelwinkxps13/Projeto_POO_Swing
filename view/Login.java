@@ -4,14 +4,6 @@
  */
 package br.edu.view;
 
-import br.edu.bancodedados.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
-import java.sql.PreparedStatement;
-
 /**
  *
  * @author Alunos
@@ -47,7 +39,6 @@ public class Login extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setMaximumSize(new java.awt.Dimension(513, 645));
@@ -55,6 +46,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setFont(new java.awt.Font("Gill Sans MT", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Login");
 
         campoNome.addActionListener(new java.awt.event.ActionListener() {
@@ -175,73 +167,18 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botaoForgotPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoForgotPasswordActionPerformed
-        /*
-        leva para a tela de esqueceu a senha
-         */
-    }//GEN-LAST:event_botaoForgotPasswordActionPerformed
-
-    private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
-        /*
-        1- Coleta os dados de email e senha, por exemplo:
-        email: example@gmail.com
-        pass: 12345678
-
-        2- verificar no banco de dados se a combinaçao de email e senha existem
-        na tabela da base de dados
-
-        3- se verdadeiro, deixe o usuario entrar na urna
-        se falso, mostre: email ou senha incorretos
-         */
-
-        try {
-            String email = campoNome.getText();
-            String senha = campoSenha.getText();
-
-            User objusuariodto = new User();
-            objusuariodto.setEmail(email);
-            objusuariodto.setSenha(senha);
-
-            UsuarioDAO objusuariodao = new UsuarioDAO();
-            ResultSet rsusuariodao = objusuariodao.autenticacaoUsuario(objusuariodto);
-            
-            if (rsusuariodao.next()) {
-                JOptionPane.showMessageDialog(null, "Bem-vindo(a) " + rsusuariodao.getString("nome") + "!");
-                java.awt.EventQueue.invokeLater(new Runnable() {
-                    public void run() {
-                        new Urna().setVisible(true);
-                    }
-
-                });
-                dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Email ou senha incorretos"); // Mostrar uma mensagem de erro
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao conectar ao banco de dados " + e); // Mostrar uma mensagem de erro
-            e.printStackTrace();
-        }
-
-    }//GEN-LAST:event_botaoEntrarActionPerformed
+    private void campoSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoSenhaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoSenhaActionPerformed
 
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
-        /*
-        leva para a tela de cadastro
-         */
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Cadastro().setVisible(true);
-            }
-        });
+        Cadastro cadastro = new Cadastro();
+        cadastro.setVisible(true);
         dispose();
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
-    private void campoSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoSenhaActionPerformed
+    private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
         // TODO add your handling code here:
-<<<<<<< HEAD
-    }//GEN-LAST:event_campoSenhaActionPerformed
-=======
     }//GEN-LAST:event_botaoEntrarActionPerformed
 
     private void botaoForgotPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoForgotPasswordActionPerformed
@@ -249,7 +186,6 @@ public class Login extends javax.swing.JFrame {
         pass.setVisible(true);
         dispose();
     }//GEN-LAST:event_botaoForgotPasswordActionPerformed
->>>>>>> b2e51846350cecd28786440f31539bf99e7aeba0
 
     private void campoNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNomeActionPerformed
         // TODO add your handling code here:
@@ -281,7 +217,7 @@ public class Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
