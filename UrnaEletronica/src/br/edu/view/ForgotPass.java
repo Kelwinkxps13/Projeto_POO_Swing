@@ -4,6 +4,8 @@
  */
 package br.edu.view;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Windows
@@ -32,10 +34,10 @@ public class ForgotPass extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         emailNewPass = new javax.swing.JTextField();
-        verifyCode = new javax.swing.JButton();
         verifyCode1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -57,14 +59,9 @@ public class ForgotPass extends javax.swing.JFrame {
 
         emailNewPass.setBackground(new java.awt.Color(255, 255, 255));
         emailNewPass.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-
-        verifyCode.setBackground(new java.awt.Color(102, 102, 102));
-        verifyCode.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
-        verifyCode.setForeground(new java.awt.Color(255, 255, 255));
-        verifyCode.setText("Verifique aqui");
-        verifyCode.addActionListener(new java.awt.event.ActionListener() {
+        emailNewPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                verifyCodeActionPerformed(evt);
+                emailNewPassActionPerformed(evt);
             }
         });
 
@@ -86,17 +83,12 @@ public class ForgotPass extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel4)
-                            .addComponent(emailNewPass)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(verifyCode1, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(135, 135, 135)
-                        .addComponent(verifyCode, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(74, 74, 74)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4)
+                    .addComponent(emailNewPass)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(verifyCode1, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE))
                 .addContainerGap(74, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -110,9 +102,7 @@ public class ForgotPass extends javax.swing.JFrame {
                 .addComponent(emailNewPass, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(verifyCode1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(verifyCode, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
+                .addGap(84, 84, 84)
                 .addComponent(jButton2)
                 .addGap(17, 17, 17))
         );
@@ -131,12 +121,6 @@ public class ForgotPass extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void verifyCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyCodeActionPerformed
-        ForgotPassVerify verify = new ForgotPassVerify();
-        verify.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_verifyCodeActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Login login = new Login();
         login.setVisible(true);
@@ -144,8 +128,20 @@ public class ForgotPass extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void verifyCode1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyCode1ActionPerformed
-        // TODO add your handling code here:
+        String email = emailNewPass.getText();
+        if(email.equals("")){
+        JOptionPane.showMessageDialog(null, "Digite um email valido", "Erro", HEIGHT);
+        }else{
+            ForgotPassVerify verify = new ForgotPassVerify();
+            verify.setVisible(true);
+            dispose();
+        }
+        
     }//GEN-LAST:event_verifyCode1ActionPerformed
+
+    private void emailNewPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailNewPassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_emailNewPassActionPerformed
 
     /**
      * @param args the command line arguments
@@ -188,7 +184,6 @@ public class ForgotPass extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton verifyCode;
     private javax.swing.JButton verifyCode1;
     // End of variables declaration//GEN-END:variables
 }

@@ -11,12 +11,7 @@ import br.edu.view.Login;
 
 public class Principal {
     public static void main(String args[]) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new UrnaEletronica();
-            }
-        });
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Login().setVisible(true);

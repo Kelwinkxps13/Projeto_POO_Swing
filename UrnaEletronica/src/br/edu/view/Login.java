@@ -4,6 +4,12 @@
  */
 package br.edu.view;
 
+import br.edu.bancodedados.User;
+import br.edu.bancodedados.UsuarioDAO;
+import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  *
  * @author Alunos
@@ -39,6 +45,7 @@ public class Login extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setMaximumSize(new java.awt.Dimension(513, 645));
@@ -178,7 +185,45 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
     private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
-        // TODO add your handling code here:
+        /*
+        1- Coleta os dados de email e senha, por exemplo:
+        email: example@gmail.com
+        pass: 12345678
+
+        2- verificar no banco de dados se a combinaçao de email e senha existem
+        na tabela da base de dados
+
+        3- se verdadeiro, deixe o usuario entrar na urna
+        se falso, mostre: email ou senha incorretos
+         */
+
+        try {
+            String email = campoNome.getText();
+            String senha = campoSenha.getText();
+
+            User objusuariodto = new User();
+            objusuariodto.setEmail(email);
+            objusuariodto.setSenha(senha);
+
+            UsuarioDAO objusuariodao = new UsuarioDAO();
+            ResultSet rsusuariodao = objusuariodao.autenticacaoUsuario(objusuariodto);
+            
+            if (rsusuariodao.next()) {
+                JOptionPane.showMessageDialog(null, "Bem-vindo(a) " + rsusuariodao.getString("nome") + "!");
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                        new Urna().setVisible(true);
+                    }
+
+                });
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Email ou senha incorretos"); // Mostrar uma mensagem de erro
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao conectar ao banco de dados " + e); // Mostrar uma mensagem de erro
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_botaoEntrarActionPerformed
 
     private void botaoForgotPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoForgotPasswordActionPerformed
