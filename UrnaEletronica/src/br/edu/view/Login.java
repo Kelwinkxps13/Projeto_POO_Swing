@@ -16,6 +16,11 @@ import java.sql.SQLException;
  */
 public class Login extends javax.swing.JFrame {
 
+    
+
+    
+    
+    
     /**
      * Creates new form Login
      */
@@ -216,6 +221,29 @@ public class Login extends javax.swing.JFrame {
                     }
 
                 });
+                
+                Urna userurna = new Urna();
+                
+                String nome = rsusuariodao.getString("nome");
+                String votosA = rsusuariodao.getString("votosA");
+                String votosB = rsusuariodao.getString("votosB");
+                String votosC = rsusuariodao.getString("votosC");
+                String votosBB = rsusuariodao.getString("votosBranco");
+                String votosNull = rsusuariodao.getString("VotosNulo");
+                
+                userurna.setEmail(email);
+                userurna.setSenha(senha);
+                userurna.setNome(nome);
+                userurna.setVotosA(votosA);
+                userurna.setVotosB(votosB);
+                userurna.setVotosC(votosC);
+                userurna.setVotosBB(votosBB);
+                userurna.setVotosNull(votosNull);
+                
+                
+                
+                
+                
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Email ou senha incorretos"); // Mostrar uma mensagem de erro

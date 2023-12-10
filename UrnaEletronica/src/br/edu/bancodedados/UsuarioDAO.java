@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 public class UsuarioDAO {
     Connection conn;
+   
 
     public ResultSet autenticacaoUsuario(User objusuariodto) {
         conn = new ConexaoDAO().conexaodao();
@@ -28,5 +29,7 @@ public class UsuarioDAO {
         }
 
     }
+    
+    
     
 }
