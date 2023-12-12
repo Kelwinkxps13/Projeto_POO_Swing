@@ -4,9 +4,18 @@
  */
 package br.edu.view;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.Window;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
- * @author Windows
+ * @author aj_un
  */
 public class NewPassword extends javax.swing.JFrame {
 
@@ -16,6 +25,7 @@ public class NewPassword extends javax.swing.JFrame {
     public NewPassword() {
         initComponents();
         setLocationRelativeTo(null);
+        connectToDatabase();
     }
 
     /**
@@ -31,9 +41,10 @@ public class NewPassword extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jPasswordField2 = new javax.swing.JPasswordField();
+        confirmPass = new javax.swing.JPasswordField();
+        newPass = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
+        verSenha = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -50,18 +61,25 @@ public class NewPassword extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Confirmar nova senha");
 
-        jPasswordField1.setBackground(new java.awt.Color(255, 255, 255));
-        jPasswordField1.setForeground(new java.awt.Color(0, 0, 0));
+        confirmPass.setBackground(new java.awt.Color(255, 255, 255));
+        confirmPass.setForeground(new java.awt.Color(0, 0, 0));
 
-        jPasswordField2.setBackground(new java.awt.Color(255, 255, 255));
-        jPasswordField2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jPasswordField2.setForeground(new java.awt.Color(0, 0, 0));
+        newPass.setBackground(new java.awt.Color(255, 255, 255));
+        newPass.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        newPass.setForeground(new java.awt.Color(0, 0, 0));
 
         jButton1.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
         jButton1.setText("Cadastrar nova senha");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        verSenha.setText("Mostrar Senha");
+        verSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verSenhaActionPerformed(evt);
             }
         });
 
@@ -76,15 +94,17 @@ public class NewPassword extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel2)
-                            .addComponent(jPasswordField1)
-                            .addComponent(jPasswordField2, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(97, 97, 97)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(verSenha)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel2)
+                                .addComponent(confirmPass)
+                                .addComponent(newPass, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -95,12 +115,14 @@ public class NewPassword extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(newPass, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
+                .addComponent(confirmPass, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19)
+                .addComponent(verSenha)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(105, Short.MAX_VALUE))
         );
@@ -119,15 +141,66 @@ public class NewPassword extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    String nomeUser = null;
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Login().setVisible(true);
-            }
-        });
-        dispose();
+        String novaSenha = newPass.getText();
+        String confirmarSenha = confirmPass.getText();
+
+        if (!novaSenha.equals(confirmarSenha)) {
+            JOptionPane.showMessageDialog(null, "As senhas não coincidem.");
+        } else {
+            mudarSenha(novaSenha, nomeUser);
+            Login appP = new Login();
+            appP.setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void verSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verSenhaActionPerformed
+        if (verSenha.isSelected()) {
+            newPass.setEchoChar((char) 0);
+            confirmPass.setEchoChar((char) 0);
+        } else {
+            newPass.setEchoChar('*');
+            confirmPass.setEchoChar('*');
+        }
+    }//GEN-LAST:event_verSenhaActionPerformed
+
+    
+    private void mudarSenha(String senha, String usuario) {
+        try {
+            String sql = "UPDATE usuario SET senha = ? WHERE nome = ?";
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setString(1, senha);
+            pstm.setString(2, usuario);
+            pstm.execute();
+            pstm.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Connection conn;
+
+    private void connectToDatabase() {
+        try {
+            String url = "jdbc:mysql://sql10.freesqldatabase.com:3306/sql10667929?user=sql10667929&password=ITlAAuv14Z";
+            conn = DriverManager.getConnection(url);
+
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, "URNA: " + error);
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -164,12 +237,13 @@ public class NewPassword extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField confirmPass;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
+    private javax.swing.JPasswordField newPass;
+    private javax.swing.JCheckBox verSenha;
     // End of variables declaration//GEN-END:variables
 }

@@ -31,5 +31,25 @@ public class UsuarioDAO {
     }
     
     
+    public void cadastrarUsuario(UsuarioDTO objusuariodto) {
+        PreparedStatement pstm;
+        String sql = "insert into Usuarios (nome_usuario,senha_usuario) values (?,?)";
+
+        conn = new ConecSQL().conectaBD();
+
+        try {
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, objusuariodto.getCriar_nome_usuario());
+            pstm.setString(2, objusuariodto.getCriar_senha_usuario());
+
+            pstm.execute();
+            pstm.close();
+
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, "UsuarioDAO (cadastrar)" + error);
+        }
+    }
+    
+    
     
 }

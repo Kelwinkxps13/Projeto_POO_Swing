@@ -4,6 +4,17 @@
  */
 package br.edu.view;
 
+import br.edu.bancodedados.*;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.Window;
+import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Windows
@@ -32,13 +43,14 @@ public class Cadastro extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        nomeCadastro = new javax.swing.JTextField();
-        confSenhaCadastro = new javax.swing.JPasswordField();
-        senhaCadastro = new javax.swing.JPasswordField();
+        txtCriarNomeUsuario = new javax.swing.JTextField();
+        txtConfirmarSenhaUsuario = new javax.swing.JPasswordField();
+        txtCriarSenhaUsuario = new javax.swing.JPasswordField();
         cadastrarBtn = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         emailCadastro = new javax.swing.JTextField();
+        verSenha = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -59,11 +71,21 @@ public class Cadastro extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Confirme sua senha");
 
-        nomeCadastro.setBackground(new java.awt.Color(255, 255, 255));
+        txtCriarNomeUsuario.setBackground(new java.awt.Color(255, 255, 255));
+        txtCriarNomeUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCriarNomeUsuarioKeyPressed(evt);
+            }
+        });
 
-        confSenhaCadastro.setBackground(new java.awt.Color(255, 255, 255));
+        txtConfirmarSenhaUsuario.setBackground(new java.awt.Color(255, 255, 255));
 
-        senhaCadastro.setBackground(new java.awt.Color(255, 255, 255));
+        txtCriarSenhaUsuario.setBackground(new java.awt.Color(255, 255, 255));
+        txtCriarSenhaUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCriarSenhaUsuarioKeyPressed(evt);
+            }
+        });
 
         cadastrarBtn.setBackground(new java.awt.Color(102, 102, 102));
         cadastrarBtn.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
@@ -91,6 +113,13 @@ public class Cadastro extends javax.swing.JFrame {
 
         emailCadastro.setBackground(new java.awt.Color(255, 255, 255));
 
+        verSenha.setText("Mostrar Senha");
+        verSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verSenhaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -103,16 +132,17 @@ public class Cadastro extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(65, 65, 65)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nomeCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCriarNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel4)
                                 .addComponent(jLabel3)
                                 .addComponent(jLabel1)
-                                .addComponent(confSenhaCadastro)
-                                .addComponent(senhaCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                                .addComponent(txtConfirmarSenhaUsuario)
+                                .addComponent(txtCriarSenhaUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
                                 .addComponent(emailCadastro))
                             .addComponent(jLabel5)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(verSenha)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(91, 91, 91)
                         .addComponent(cadastrarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -124,30 +154,31 @@ public class Cadastro extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(44, 44, 44)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(19, 19, 19))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)
+                        .addGap(5, 5, 5)))
                 .addComponent(emailCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nomeCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(txtCriarNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtCriarSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(senhaCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(confSenhaCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtConfirmarSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(verSenha)
+                .addGap(16, 16, 16)
                 .addComponent(cadastrarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -173,6 +204,28 @@ public class Cadastro extends javax.swing.JFrame {
         login.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void verSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verSenhaActionPerformed
+        if (verSenha.isSelected()) {
+            txtCriarSenhaUsuario.setEchoChar((char) 0);
+            txtConfirmarSenhaUsuario.setEchoChar((char) 0);
+        } else {
+            txtCriarSenhaUsuario.setEchoChar('*');
+            txtConfirmarSenhaUsuario.setEchoChar('*');
+        }
+    }//GEN-LAST:event_verSenhaActionPerformed
+
+    private void txtCriarNomeUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCriarNomeUsuarioKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtCriarSenhaUsuario.requestFocus();
+        }
+    }//GEN-LAST:event_txtCriarNomeUsuarioKeyPressed
+
+    private void txtCriarSenhaUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCriarSenhaUsuarioKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            Checar();
+        }
+    }//GEN-LAST:event_txtCriarSenhaUsuarioKeyPressed
 
     /**
      * @param args the command line arguments
@@ -211,7 +264,6 @@ public class Cadastro extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cadastrarBtn;
-    private javax.swing.JPasswordField confSenhaCadastro;
     private javax.swing.JTextField emailCadastro;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -220,7 +272,57 @@ public class Cadastro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField nomeCadastro;
-    private javax.swing.JPasswordField senhaCadastro;
+    private javax.swing.JPasswordField txtConfirmarSenhaUsuario;
+    private javax.swing.JTextField txtCriarNomeUsuario;
+    private javax.swing.JPasswordField txtCriarSenhaUsuario;
+    private javax.swing.JCheckBox verSenha;
     // End of variables declaration//GEN-END:variables
+
+private void Criar() {
+        String nome, senha, confirmarsenha, email;
+
+        nome = txtCriarNomeUsuario.getText();
+        senha = txtCriarSenhaUsuario.getText();
+        email = emailCadastro.getText();
+
+        UsuarioDTO objusuariodto = new UsuarioDTO();
+        objusuariodto.setCriar_nome_usuario(nome);
+        objusuariodto.setCriar_senha_usuario(senha);
+        objusuariodto.setCriar_senha_usuario(email);
+
+        UsuarioDAO objusuariodao = new UsuarioDAO();
+        objusuariodao.cadastrarUsuario(objusuariodto);
+
+        //chamar tela principal
+        AppPrincipalVIEW objappprincipalview = new AppPrincipalVIEW();
+        objappprincipalview.setVisible(true);
+
+        dispose();
+
+    }
+
+    private void Checar() {
+        try {
+            String nome = txtCriarNomeUsuario.getText();
+
+            UsuarioDTO objusuariodto = new UsuarioDTO();
+            objusuariodto.setCriar_nome_usuario(nome);
+
+            UsuarioDAO objusuariodao = new UsuarioDAO();
+            ResultSet rsusuariodao = objusuariodao.checarUsuarioExistente(objusuariodto);
+
+            if (rsusuariodao.next()) {
+                JOptionPane.showMessageDialog(null, "Esse usuario já existe");
+            } else {
+                Criar();
+            }
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, "FormularioCriarContaVIEW: " + error);
+        }
+    }
+
+
+
+
+
 }
