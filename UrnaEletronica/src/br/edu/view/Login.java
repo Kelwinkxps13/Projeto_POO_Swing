@@ -219,6 +219,10 @@ public class Login extends javax.swing.JFrame {
             try {
             String email = campoNome.getText();
             String senha = campoSenha.getText();
+            
+            Urna user = new Urna();
+            
+            
 
             User objusuariodto = new User();
             objusuariodto.setEmail(email);
@@ -238,26 +242,26 @@ public class Login extends javax.swing.JFrame {
                 
                 Urna userurna = new Urna();
                 
+                
                 String nome = rsusuariodao.getString("nome");
+                String email1 = rsusuariodao.getString("email");
+                String senha1 = rsusuariodao.getString("senha");
                 String votosA = rsusuariodao.getString("votosA");
                 String votosB = rsusuariodao.getString("votosB");
                 String votosC = rsusuariodao.getString("votosC");
                 String votosBB = rsusuariodao.getString("votosBranco");
                 String votosNull = rsusuariodao.getString("VotosNulo");
+                String votosEx = rsusuariodao.getString("VotosEx");
                 
-                userurna.setEmail(email);
-                userurna.setSenha(senha);
-                userurna.setNome(nome);
-                userurna.setVotosA(votosA);
-                userurna.setVotosB(votosB);
-                userurna.setVotosC(votosC);
-                userurna.setVotosBB(votosBB);
-                userurna.setVotosNull(votosNull);
-                
-                
-                
-                
-                
+                user.nome = nome;
+                user.email = email1;
+                user.senha = senha1;
+                user.votosA = votosA;
+                user.votosB = votosB;
+                user.votosC = votosC;
+                user.votosBB = votosBB;
+                user.votosNull = votosNull;
+                user.votosEx = votosEx;
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Email ou senha incorretos"); // Mostrar uma mensagem de erro
