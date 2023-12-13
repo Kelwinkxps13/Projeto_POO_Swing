@@ -179,6 +179,9 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    String emailUser = null;
+    
     private void campoSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoSenhaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoSenhaActionPerformed
@@ -201,8 +204,19 @@ public class Login extends javax.swing.JFrame {
         3- se verdadeiro, deixe o usuario entrar na urna
         se falso, mostre: email ou senha incorretos
          */
-
-        try {
+        
+        
+        String emailx, senhax;
+        
+        emailx = campoNome.getText();
+        senhax = campoSenha.getText();
+        
+        
+        if(emailx.equals("") || senhax.equals("")){
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos!!");
+        }else{
+        
+            try {
             String email = campoNome.getText();
             String senha = campoSenha.getText();
 
@@ -252,6 +266,15 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro ao conectar ao banco de dados " + e); // Mostrar uma mensagem de erro
             e.printStackTrace();
         }
+            
+            
+        }
+        
+        
+        
+        
+
+        
     }//GEN-LAST:event_botaoEntrarActionPerformed
 
     private void botaoForgotPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoForgotPasswordActionPerformed

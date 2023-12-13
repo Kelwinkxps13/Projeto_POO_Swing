@@ -142,7 +142,7 @@ public class NewPassword extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
-    String nomeUser = null;
+    String emailUser = null;
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String novaSenha = newPass.getText();
@@ -151,7 +151,7 @@ public class NewPassword extends javax.swing.JFrame {
         if (!novaSenha.equals(confirmarSenha)) {
             JOptionPane.showMessageDialog(null, "As senhas não coincidem.");
         } else {
-            mudarSenha(novaSenha, nomeUser);
+            mudarSenha(novaSenha, emailUser);
             Login appP = new Login();
             appP.setVisible(true);
             dispose();
@@ -171,7 +171,7 @@ public class NewPassword extends javax.swing.JFrame {
     
     private void mudarSenha(String senha, String usuario) {
         try {
-            String sql = "UPDATE usuario SET senha = ? WHERE nome = ?";
+            String sql = "UPDATE usuarios SET senha = ? WHERE email = ?";
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setString(1, senha);
             pstm.setString(2, usuario);
@@ -187,7 +187,7 @@ public class NewPassword extends javax.swing.JFrame {
 
     private void connectToDatabase() {
         try {
-            String url = "jdbc:mysql://sql10.freesqldatabase.com:3306/sql10667929?user=sql10667929&password=ITlAAuv14Z";
+            String url = "jdbc:mysql://sql10.freesqldatabase.com:3306/sql10669860?user=sql10669860&password=dPvlAtAmq6";
             conn = DriverManager.getConnection(url);
 
         } catch (SQLException error) {

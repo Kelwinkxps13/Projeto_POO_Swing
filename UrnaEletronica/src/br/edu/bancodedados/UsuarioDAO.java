@@ -33,14 +33,16 @@ public class UsuarioDAO {
     
     public void cadastrarUsuario(UsuarioDTO objusuariodto) {
         PreparedStatement pstm;
-        String sql = "insert into Usuarios (nome_usuario,senha_usuario) values (?,?)";
+        String sql = "insert into usuarios (nome, email, senha, votosA, votosB, votosC, votosBranco, votosNulo, votosEx) values (?,?,?,0,0,0,0,0,0)";
 
-        conn = new ConecSQL().conectaBD();
+        conn = new ConexaoDAO().conexaodao();
 
         try {
+            
             pstm = conn.prepareStatement(sql);
             pstm.setString(1, objusuariodto.getCriar_nome_usuario());
-            pstm.setString(2, objusuariodto.getCriar_senha_usuario());
+            pstm.setString(2, objusuariodto.getCriar_email_usuario());
+            pstm.setString(3, objusuariodto.getCriar_senha_usuario());
 
             pstm.execute();
             pstm.close();
@@ -51,5 +53,25 @@ public class UsuarioDAO {
     }
     
     
+    
+    
+    
+    public ResultSet checarUsuarioExistente(UsuarioDTO objusuariodto) {
+        conn = new ConexaoDAO().conexaodao();
+        
+        try {
+            String sql = "select * from usuarios where email = ?";
+            
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setString(1, objusuariodto.getCriar_email_usuario());
+            
+            ResultSet rs = pstm.executeQuery();
+            return rs;
+            
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, "UsuarioDAO (checagem): " + error);
+            return null;
+        }
+    }
     
 }

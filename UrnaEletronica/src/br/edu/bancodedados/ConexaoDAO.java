@@ -18,7 +18,7 @@ public class ConexaoDAO{
         Connection conn = null;
         // 192.168.18.165
         try {
-            String url = "jdbc:mysql://sql10.freesqldatabase.com:3306/sql10667929?user=sql10667929&password=ITlAAuv14Z";
+            String url = "jdbc:mysql://sql10.freesqldatabase.com:3306/sql10669860?user=sql10669860&password=dPvlAtAmq6";
             conn = DriverManager.getConnection(url);
         } catch (SQLException erro) {
             JOptionPane.showMessageDialog(null, "ConexaoDao "+erro);

@@ -163,12 +163,26 @@ public class ForgotPass extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void verifyCode1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyCode1ActionPerformed
-        mandarEmail(sixDigit);
-        ForgotPassVerify verif = new ForgotPassVerify();
-        verif.codeRecieved = sixDigit;
-        verif.recoverUser = username.getText();
-        verif.setVisible(true);
-        dispose();
+
+        String emailx, senhax;
+        
+        emailx = emailNewPass.getText();
+        senhax = username.getText();
+        
+        
+        if(emailx.equals("") || senhax.equals("")){
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos!!");
+        }else{
+            mandarEmail(sixDigit);
+             ForgotPassVerify verif = new ForgotPassVerify();
+           verif.codeRecieved = sixDigit;
+           verif.recoverUser = emailNewPass.getText();
+            verif.setVisible(true);
+            dispose();
+        }
+
+
+        
     }//GEN-LAST:event_verifyCode1ActionPerformed
 
     private void emailNewPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailNewPassActionPerformed

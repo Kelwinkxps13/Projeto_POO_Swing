@@ -11,8 +11,18 @@ import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
 
 /**
@@ -196,7 +206,32 @@ public class Cadastro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cadastrarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarBtnActionPerformed
-        // TODO add your handling code here:
+        
+        String email, nome, senha, csenha;
+        
+        email = emailCadastro.getText();
+        nome = txtCriarNomeUsuario.getText();
+        senha = txtCriarSenhaUsuario.getText();
+        csenha = txtConfirmarSenhaUsuario.getText();
+        
+        
+        if(email.equals("") || nome.equals("") || senha.equals("") || csenha.equals("")){
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos!!");
+        }else{
+            
+             mandarEmail(sixDigit);
+             ConfirmarEmail verif = new ConfirmarEmail();
+             verif.codeRecieved = sixDigit;
+             verif.recoverUser = emailCadastro.getText();
+             verif.recoverPass = txtCriarSenhaUsuario.getText();
+             verif.recoverName = txtCriarNomeUsuario.getText();
+             JOptionPane.showMessageDialog(null, "Foi enviado um codigo de confirmação para o email "+email);
+             verif.setVisible(true);
+             dispose();
+            
+        }
+        
+       
     }//GEN-LAST:event_cadastrarBtnActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -278,8 +313,15 @@ public class Cadastro extends javax.swing.JFrame {
     private javax.swing.JCheckBox verSenha;
     // End of variables declaration//GEN-END:variables
 
-private void Criar() {
-        String nome, senha, confirmarsenha, email;
+    
+    Random rnd = new Random();
+    int number = rnd.nextInt(999999);
+
+    // this will convert any number sequence into 6 character.
+    String sixDigit = String.format("%06d", number);
+    
+    private void Criar() {
+        String nome, senha, email;
 
         nome = txtCriarNomeUsuario.getText();
         senha = txtCriarSenhaUsuario.getText();
@@ -287,14 +329,15 @@ private void Criar() {
 
         UsuarioDTO objusuariodto = new UsuarioDTO();
         objusuariodto.setCriar_nome_usuario(nome);
+        objusuariodto.setCriar_email_usuario(email);
         objusuariodto.setCriar_senha_usuario(senha);
-        objusuariodto.setCriar_senha_usuario(email);
+        
 
         UsuarioDAO objusuariodao = new UsuarioDAO();
         objusuariodao.cadastrarUsuario(objusuariodto);
 
         //chamar tela principal
-        AppPrincipalVIEW objappprincipalview = new AppPrincipalVIEW();
+        Login objappprincipalview = new Login();
         objappprincipalview.setVisible(true);
 
         dispose();
@@ -303,16 +346,16 @@ private void Criar() {
 
     private void Checar() {
         try {
-            String nome = txtCriarNomeUsuario.getText();
+            String email = emailCadastro.getText();
 
             UsuarioDTO objusuariodto = new UsuarioDTO();
-            objusuariodto.setCriar_nome_usuario(nome);
+            objusuariodto.setCriar_email_usuario(email);
 
             UsuarioDAO objusuariodao = new UsuarioDAO();
             ResultSet rsusuariodao = objusuariodao.checarUsuarioExistente(objusuariodto);
 
             if (rsusuariodao.next()) {
-                JOptionPane.showMessageDialog(null, "Esse usuario já existe");
+                JOptionPane.showMessageDialog(null, "Esse email já está cadastrado.");
             } else {
                 Criar();
             }
@@ -320,9 +363,44 @@ private void Criar() {
             JOptionPane.showMessageDialog(null, "FormularioCriarContaVIEW: " + error);
         }
     }
+    
+    
+     public void mandarEmail(String texto) {
+        try {
+            String fromEmail = "projecjava6@gmail.com"; //requires valid gmail id
+            String password = "stkb pmar myaj wgeb"; // correct password for gmail id
+            String toEmail = emailCadastro.getText(); // can be any email id 
 
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true"); //enable authentication
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
+            props.put("mail.smtp.port", "587"); //TLS Port
 
+            //create Authenticator object to pass in Session.getInstance argument
+            Authenticator auth = new Authenticator() {
+                //override the getPasswordAuthentication method
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(fromEmail, password);
+                }
+            };
 
+            Session session = Session.getInstance(props, auth);
 
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(fromEmail));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
+            message.setSubject("Envio do código");
+            String textHtml = "<h1> <b>" + texto + "</b> </h1>";
+            message.setContent(textHtml, "text/html");
+
+            Transport.send(message);
+        } catch (MessagingException ex) {
+            ex.getMessage();
+            Logger.getLogger(ForgotPass.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
 }
