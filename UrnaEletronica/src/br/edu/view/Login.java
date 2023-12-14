@@ -232,7 +232,7 @@ public class Login extends javax.swing.JFrame {
             ResultSet rsusuariodao = objusuariodao.autenticacaoUsuario(objusuariodto);
             
             if (rsusuariodao.next()) {
-                JOptionPane.showMessageDialog(null, "Bem-vindo(a) " + rsusuariodao.getString("nome") + "!");
+                
                 
                 
                 
@@ -258,6 +258,7 @@ public class Login extends javax.swing.JFrame {
                 user.votosEx = votosEx;
                 user.setVisible(true);
                 dispose();
+                JOptionPane.showMessageDialog(null, "Bem-vindo(a) " + rsusuariodao.getString("nome") + "!");
             } else {
                 JOptionPane.showMessageDialog(null, "Email ou senha incorretos"); // Mostrar uma mensagem de erro
             }

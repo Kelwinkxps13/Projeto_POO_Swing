@@ -171,9 +171,10 @@ public class ForgotPass extends javax.swing.JFrame {
              ForgotPassVerify verif = new ForgotPassVerify();
            verif.codeRecieved = sixDigit;
            verif.recoverUser = emailNewPass.getText();
-           JOptionPane.showMessageDialog(null, "Email enviado com sucesso!! Certifique-se de que digitou o email correto");
+           
             verif.setVisible(true);
             dispose();
+            JOptionPane.showMessageDialog(null, "Email enviado com sucesso!! Certifique-se de que digitou o email correto");
         }
                     }
 
