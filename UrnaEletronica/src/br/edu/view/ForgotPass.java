@@ -4,10 +4,15 @@
  */
 package br.edu.view;
 
+import java.sql.Connection;
+import br.edu.bancodedados.ConexaoDAO;
 import javax.swing.JOptionPane;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.Window;
+import static java.lang.Integer.parseInt;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Properties;
 import java.util.Random;
 import java.util.logging.Level;
@@ -50,10 +55,9 @@ public class ForgotPass extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         emailNewPass = new javax.swing.JTextField();
         verifyCode1 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        username = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Esqueceu a senha?");
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
@@ -92,18 +96,6 @@ public class ForgotPass extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Gadugi", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Nome de Usuário");
-
-        username.setBackground(new java.awt.Color(255, 255, 255));
-        username.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        username.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernameActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -114,12 +106,10 @@ public class ForgotPass extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(74, 74, 74)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel5)
                     .addComponent(jLabel4)
                     .addComponent(emailNewPass)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(verifyCode1, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
-                    .addComponent(username))
+                    .addComponent(verifyCode1, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE))
                 .addContainerGap(74, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -131,11 +121,7 @@ public class ForgotPass extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(emailNewPass, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(verifyCode1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2)
@@ -167,19 +153,46 @@ public class ForgotPass extends javax.swing.JFrame {
         String emailx, senhax;
         
         emailx = emailNewPass.getText();
-        senhax = username.getText();
-        
-        
-        if(emailx.equals("") || senhax.equals("")){
-            JOptionPane.showMessageDialog(null, "Preencha todos os campos!!");
+       
+             try {
+                    Connection conn;
+                    conn = new ConexaoDAO().conexaodao();
+                    String sqlSelect = "SELECT * FROM usuarios WHERE email = '"+emailx+"'";
+                    PreparedStatement selectPstm = conn.prepareStatement(sqlSelect);
+                    ResultSet resultSet = selectPstm.executeQuery();
+
+                    if (!resultSet.next()) {
+                        JOptionPane.showMessageDialog(null, "Este email não existe ou não está cadastrado.");
+                    }else{
+                        if(emailx.equals("")){
+            JOptionPane.showMessageDialog(null, "Preencha o campo!!");
         }else{
             mandarEmail(sixDigit);
              ForgotPassVerify verif = new ForgotPassVerify();
            verif.codeRecieved = sixDigit;
            verif.recoverUser = emailNewPass.getText();
+           JOptionPane.showMessageDialog(null, "Email enviado com sucesso!! Certifique-se de que digitou o email correto");
             verif.setVisible(true);
             dispose();
         }
+                    }
+
+                    resultSet.close();
+                    selectPstm.close();
+                   }catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "ocorreu um erro.");
+                    e.printStackTrace();
+                    } 
+                
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
 
         
@@ -188,10 +201,6 @@ public class ForgotPass extends javax.swing.JFrame {
     private void emailNewPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailNewPassActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_emailNewPassActionPerformed
-
-    private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usernameActionPerformed
 
     
     
@@ -231,12 +240,13 @@ public class ForgotPass extends javax.swing.JFrame {
             };
 
             Session session = Session.getInstance(props, auth);
-
+            String msg = "Aqui está seu código de recuperação de senha:";
+            String msg2 = "se não foi você, por favor ignore este email.";
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(fromEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
-            message.setSubject("Envio do código");
-            String textHtml = "<h1> <b>" + texto + "</b> </h1>";
+            message.setSubject("Envio do código de Recuperação de senha");
+            String textHtml = "<p>"+msg+"</p>"+"<hr/>"+"<h1> <b>" + texto + "</b> </h1>"+"<hr/>"+"<p>"+msg2+"</p>";
             message.setContent(textHtml, "text/html");
 
             Transport.send(message);
@@ -293,9 +303,7 @@ public class ForgotPass extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField username;
     private javax.swing.JButton verifyCode1;
     // End of variables declaration//GEN-END:variables
 }

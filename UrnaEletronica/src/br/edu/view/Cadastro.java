@@ -63,6 +63,7 @@ public class Cadastro extends javax.swing.JFrame {
         verSenha = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cadastro");
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
@@ -387,12 +388,13 @@ public class Cadastro extends javax.swing.JFrame {
             };
 
             Session session = Session.getInstance(props, auth);
-
+            String msg = "Obrigado por escolher a Creativerse Tech! Aqui está seu código de recuperação de senha:";
+            String msg2 = "se não foi você, por favor ignore este email.";
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(fromEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
-            message.setSubject("Envio do código");
-            String textHtml = "<h1> <b>" + texto + "</b> </h1>";
+            message.setSubject("Envio do código de Cadastro");
+            String textHtml = "<p>"+msg+"</p>"+"<hr/>"+"<h1> <b>" + texto + "</b> </h1>"+"<hr/>"+"<p>"+msg2+"</p>";
             message.setContent(textHtml, "text/html");
 
             Transport.send(message);

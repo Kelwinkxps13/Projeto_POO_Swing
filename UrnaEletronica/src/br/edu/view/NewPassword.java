@@ -47,6 +47,7 @@ public class NewPassword extends javax.swing.JFrame {
         verSenha = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Nova Senha");
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
@@ -153,6 +154,7 @@ public class NewPassword extends javax.swing.JFrame {
         } else {
             mudarSenha(novaSenha, emailUser);
             Login appP = new Login();
+            JOptionPane.showMessageDialog(null, "Senha alterada com sucesso!");
             appP.setVisible(true);
             dispose();
         }

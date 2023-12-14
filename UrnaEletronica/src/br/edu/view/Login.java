@@ -50,6 +50,7 @@ public class Login extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login");
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -181,7 +182,6 @@ public class Login extends javax.swing.JFrame {
 
     
     String emailUser = null;
-    
     private void campoSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoSenhaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoSenhaActionPerformed
@@ -233,14 +233,7 @@ public class Login extends javax.swing.JFrame {
             
             if (rsusuariodao.next()) {
                 JOptionPane.showMessageDialog(null, "Bem-vindo(a) " + rsusuariodao.getString("nome") + "!");
-                java.awt.EventQueue.invokeLater(new Runnable() {
-                    public void run() {
-                        new Urna().setVisible(true);
-                    }
-
-                });
                 
-                Urna userurna = new Urna();
                 
                 
                 String nome = rsusuariodao.getString("nome");
@@ -252,6 +245,7 @@ public class Login extends javax.swing.JFrame {
                 String votosBB = rsusuariodao.getString("votosBranco");
                 String votosNull = rsusuariodao.getString("VotosNulo");
                 String votosEx = rsusuariodao.getString("VotosEx");
+            
                 
                 user.nome = nome;
                 user.email = email1;
@@ -262,6 +256,7 @@ public class Login extends javax.swing.JFrame {
                 user.votosBB = votosBB;
                 user.votosNull = votosNull;
                 user.votosEx = votosEx;
+                user.setVisible(true);
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Email ou senha incorretos"); // Mostrar uma mensagem de erro
