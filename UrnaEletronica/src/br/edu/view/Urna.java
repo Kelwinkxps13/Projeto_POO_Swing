@@ -633,10 +633,10 @@ public class Urna extends javax.swing.JFrame {
                         texto = "";
                campoText.setText(texto);
                     }else{
-                        int nvotosAi = votosBi + 1;
+                        int nvotosBi = votosBi + 1;
                         int nvotosExi = votosExi+1;
                         
-                    votosA = Integer.toString(nvotosAi);
+                    votosB = Integer.toString(nvotosBi);
                     votosEx = Integer.toString(nvotosExi);
 
                     String sqlUpdate = "UPDATE usuarios SET votosB = ?, VotosEx = ? WHERE email = '"+email+"'";

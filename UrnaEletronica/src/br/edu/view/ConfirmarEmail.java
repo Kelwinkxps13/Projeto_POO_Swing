@@ -156,11 +156,7 @@ public class ConfirmarEmail extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "O código está errado");
         } else {
             Login recover = new Login();
-            recover.emailUser = recoverUser;
-            Checar();
-            recover.setVisible(true);
-            dispose();
-            JOptionPane.showMessageDialog(null, "Usuário cadastrado com Sucesso");
+            Checar();   
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -226,9 +226,12 @@ public class Cadastro extends javax.swing.JFrame {
              verif.recoverUser = emailCadastro.getText();
              verif.recoverPass = txtCriarSenhaUsuario.getText();
              verif.recoverName = txtCriarNomeUsuario.getText();
+             JOptionPane.showMessageDialog(null, "Foi enviado um codigo de confirmação para o email "+email);
+             
              verif.setVisible(true);
              dispose();
-             JOptionPane.showMessageDialog(null, "Foi enviado um codigo de confirmação para o email "+email);
+             
+             
             
         }
         
