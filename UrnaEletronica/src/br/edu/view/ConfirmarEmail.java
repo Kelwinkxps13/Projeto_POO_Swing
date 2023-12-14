@@ -4,21 +4,25 @@
  */
 package br.edu.view;
 
+import br.edu.bancodedados.UsuarioDAO;
+import br.edu.bancodedados.UsuarioDTO;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.Window;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author aj_un
  */
-public class ForgotPassVerify extends javax.swing.JFrame {
+public class ConfirmarEmail extends javax.swing.JFrame {
 
     /**
      * Creates new form ForgotPassword
      */
-    public ForgotPassVerify() {
+    public ConfirmarEmail() {
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -74,7 +78,7 @@ public class ForgotPassVerify extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setForeground(new java.awt.Color(0, 0, 0));
-        jButton2.setText("Voltar para a verificação");
+        jButton2.setText("Voltar para o cadastro");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -137,27 +141,25 @@ public class ForgotPassVerify extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        ForgotPass forgotPass = new ForgotPass();
+        Cadastro forgotPass = new Cadastro();
         forgotPass.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     String codeRecieved = null;
     String recoverUser = null;
+    String recoverPass = null;
+    String recoverName = null;
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String codeInputted = codeInput.getText();
-        
-        
-        
-        if(codeInputted.equals("")){
-            JOptionPane.showMessageDialog(null, "Preencha todos os campos!!");
-        }else if (!codeInputted.equals(codeRecieved) & !codeInputted.equals("")) {
+        if (!codeInputted.equals(codeRecieved)) {
             JOptionPane.showMessageDialog(null, "O código está errado");
         } else {
-            NewPassword recover = new NewPassword();
-            recover.setVisible(true);
+            Login recover = new Login();
             recover.emailUser = recoverUser;
+            Checar();
+            recover.setVisible(true);
             dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -173,4 +175,55 @@ public class ForgotPassVerify extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
+
+
+
+    private void Criar() {
+        String nome, senha, email;
+
+        nome = recoverName;
+        senha = recoverPass;
+        email = recoverUser;
+
+        UsuarioDTO objusuariodto = new UsuarioDTO();
+        objusuariodto.setCriar_nome_usuario(nome);
+        objusuariodto.setCriar_email_usuario(email);
+        objusuariodto.setCriar_senha_usuario(senha);
+        
+
+        UsuarioDAO objusuariodao = new UsuarioDAO();
+        objusuariodao.cadastrarUsuario(objusuariodto);
+
+        //chamar tela principal
+        Login objappprincipalview = new Login();
+        JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso.");
+        objappprincipalview.setVisible(true);
+
+        dispose();
+
+    }
+
+    private void Checar() {
+        try {
+            String email = recoverUser;
+
+            UsuarioDTO objusuariodto = new UsuarioDTO();
+            objusuariodto.setCriar_email_usuario(email);
+
+            UsuarioDAO objusuariodao = new UsuarioDAO();
+            ResultSet rsusuariodao = objusuariodao.checarUsuarioExistente(objusuariodto);
+
+            if (rsusuariodao.next()) {
+                JOptionPane.showMessageDialog(null, "Esse email já está cadastrado.");
+            } else {
+                Criar();
+            }
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, "FormularioCriarContaVIEW: " + error);
+        }
+    }
+
+
+
+
 }
