@@ -388,7 +388,7 @@ public class Cadastro extends javax.swing.JFrame {
             };
 
             Session session = Session.getInstance(props, auth);
-            String msg = "Obrigado por escolher a Creativerse Tech! Aqui está seu código de recuperação de senha:";
+            String msg = "Obrigado por escolher a Creativerse Tech! Aqui está seu código para concluir o cadastro:";
             String msg2 = "se não foi você, por favor ignore este email.";
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(fromEmail));
