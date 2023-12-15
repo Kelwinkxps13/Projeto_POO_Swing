@@ -6,7 +6,7 @@
 * [Linguagem](#Linguagem)
 * [Imagens do App](#Imagens-do-App)
 * [Fluxograma](#Fluxograma)
-* [Diagrama](#Diagrama)
+* [Diagrama](#Diagrama-das-telas)
 * [Equipe](#Equipe)
 
 # Projeto_POO_Swing
