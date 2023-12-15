@@ -59,18 +59,22 @@
   <div>
     <img height="300" src="https://raw.githubusercontent.com/gist/Elbston/3a9d725f45be717093883ddfc44a679c/raw/d0f20a85962ef5bd91c5eff586f82342ab2c3a81/Elbston.svg"/>
   </div>
+  <h3>Realizou a organização do github, a criação do fluxograma e foi responsável pela modularização do código. Além disso, também desenvolveu os slides da nossa apresentação contribuiu com o marketing do programa.</h3>
   
 - [Lucas Costa](https://github.com/LucasCostaMrq)
   <div>
     <img height="300" src="https://raw.githubusercontent.com/gist/Elbston/5dc90696ce4281fc06bc03ec2e1b2311/raw/279e1abebea5659fb88738b32116dd32678e7440/lucas.svg"/>
   </div>
+  <h3>Desenvolvedor front-end: atuou com o desenvolvimento das telas do programa e também complementou com a finalização do github.</h3>
   
 - [Cauã Icaro](https://github.com/Cauaicaro1709)
   <div>
      <img height="300" src="https://raw.githubusercontent.com/gist/Elbston/4524fc59937a45c5f8b0dde2b48432ae/raw/708abdd6f0961a613a7174dbbf36ab77c75c75c7/Cau%C3%A3.svg"/>
   </div>
-  
+  <h3>Designer UI: contribuiu com a criação dos desings de User Interface(UI) para o desenvolvimento das telas. Além disso, fez a produção do fluxo de telas.</h3>
+
 - [Kelwin Jhackson](https://github.com/Kelwinkxps13)
 <div>
     <img height="300" src="https://raw.githubusercontent.com/gist/Elbston/572e25903923037f40d70e91dfea6978/raw/2fce6f19c36dee853fc74ade17dd01cc9558560e/Kelwin.svg"/>
 </div>
+<h3>Programou e dinamizou o software do programa, implementando o sistema de cadastro e e-mail com o banco de dados, o sistema de votação da urna e o tratamentos para que o funcionamenteo do programa ocorra da forma correta.</h3>
