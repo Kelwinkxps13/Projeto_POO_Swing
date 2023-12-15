@@ -77,4 +77,4 @@
 <div>
     <img height="300" src="https://raw.githubusercontent.com/gist/Elbston/572e25903923037f40d70e91dfea6978/raw/2fce6f19c36dee853fc74ade17dd01cc9558560e/Kelwin.svg"/>
 </div>
-<h3>Programou e dinamizou o software do programa, implementando o sistema de cadastro e e-mail com o banco de dados, o sistema de votação da urna e o tratamentos para que o funcionamenteo do programa ocorra da forma correta.</h3>
+<h3>Programou e dinamizou o software do programa, implementando o sistema de cadastro e e-mail com o banco de dados, o sistema de votação da urna e os tratamentos para que o funcionamenteo do programa ocorra da forma correta.</h3>
