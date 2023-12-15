@@ -16,11 +16,11 @@
 </h3>
 
 <h3>
-  Este aplicativo é uma urna eletronica com sistema de login, cadastro e de recuperação de senha 
+  Este aplicativo é uma urna eletronica com sistema de login, cadastro e de recuperação de senha.
 </h3>
 
 <h3>
-  Requisitos: Jdk17 ou versões mais atuais,
+  Requisitos: Jdk17 ou versões mais atuais.
 </h3>
 
 ## Ferramentas utilizadas 
