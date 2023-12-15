@@ -581,7 +581,7 @@ public class Urna extends javax.swing.JFrame {
                     resultSet.close();
                     selectPstm.close();
 
-                    if(votosExi>=3){
+                    if(votosExi>=1){
                         JOptionPane.showMessageDialog(null, "Você não pode mais votar!!");
                         texto = "";
                campoText.setText(texto);
@@ -628,7 +628,7 @@ public class Urna extends javax.swing.JFrame {
                     resultSet.close();
                     selectPstm.close();
 
-                    if(votosExi>=3){
+                    if(votosExi>=1){
                         JOptionPane.showMessageDialog(null, "Você não pode mais votar!!");
                         texto = "";
                campoText.setText(texto);
@@ -675,7 +675,7 @@ public class Urna extends javax.swing.JFrame {
                     resultSet.close();
                     selectPstm.close();
 
-                    if(votosExi>=3){
+                    if(votosExi>=1){
                         JOptionPane.showMessageDialog(null, "Você não pode mais votar!!");
                         texto = "";
                campoText.setText(texto);
@@ -724,7 +724,7 @@ public class Urna extends javax.swing.JFrame {
                     resultSet.close();
                     selectPstm.close();
 
-                    if(votosExi>=3){
+                    if(votosExi>=1){
                         JOptionPane.showMessageDialog(null, "Você não pode mais votar!!");
                         texto = "";
                campoText.setText(texto);
@@ -774,7 +774,7 @@ public class Urna extends javax.swing.JFrame {
                     resultSet.close();
                     selectPstm.close();
 
-                    if(votosExi>=3){
+                    if(votosExi>=1){
                         JOptionPane.showMessageDialog(null, "Você não pode mais votar!!");
                         texto = "";
                campoText.setText(texto);

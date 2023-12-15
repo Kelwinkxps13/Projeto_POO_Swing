@@ -153,10 +153,7 @@ public class NewPassword extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "As senhas não coincidem.");
         } else {
             mudarSenha(novaSenha, emailUser);
-            Login appP = new Login();
-            JOptionPane.showMessageDialog(null, "Senha alterada com sucesso!");
-            appP.setVisible(true);
-            dispose();
+            
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -179,9 +176,15 @@ public class NewPassword extends javax.swing.JFrame {
             pstm.setString(2, usuario);
             pstm.execute();
             pstm.close();
+            
+            Login appP = new Login();
+            JOptionPane.showMessageDialog(null, "Senha alterada com sucesso!");
+            appP.setVisible(true);
+            dispose();
 
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao mudar a senha.");
         }
     }
 

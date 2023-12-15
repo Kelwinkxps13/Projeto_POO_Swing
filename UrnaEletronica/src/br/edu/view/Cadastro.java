@@ -218,21 +218,12 @@ public class Cadastro extends javax.swing.JFrame {
         
         if(email.equals("") || nome.equals("") || senha.equals("") || csenha.equals("")){
             JOptionPane.showMessageDialog(null, "Preencha todos os campos!!");
-        }else{
-            
-             mandarEmail(sixDigit);
-             ConfirmarEmail verif = new ConfirmarEmail();
-             verif.codeRecieved = sixDigit;
-             verif.recoverUser = emailCadastro.getText();
-             verif.recoverPass = txtCriarSenhaUsuario.getText();
-             verif.recoverName = txtCriarNomeUsuario.getText();
-             JOptionPane.showMessageDialog(null, "Foi enviado um codigo de confirmação para o email "+email);
-             
-             verif.setVisible(true);
-             dispose();
-             
-             
-            
+        }else if(!senha.equals(csenha)){
+            JOptionPane.showMessageDialog(null, "As senhas não coincidem!!");
+        }
+        
+        else{  
+             mandarEmail(sixDigit);  
         }
         
        
@@ -401,9 +392,21 @@ public class Cadastro extends javax.swing.JFrame {
             message.setContent(textHtml, "text/html");
 
             Transport.send(message);
+            
+            ConfirmarEmail verif = new ConfirmarEmail();
+             verif.codeRecieved = sixDigit;
+             verif.recoverUser = emailCadastro.getText();
+             verif.recoverPass = txtCriarSenhaUsuario.getText();
+             verif.recoverName = txtCriarNomeUsuario.getText();
+             String email = emailCadastro.getText();
+             JOptionPane.showMessageDialog(null, "Foi enviado um codigo de confirmação para o email "+email);
+             JOptionPane.showMessageDialog(null, "tenha certeza que o email "+email+" é valido");
+             verif.setVisible(true);
+             dispose();
         } catch (MessagingException ex) {
             ex.getMessage();
             Logger.getLogger(ForgotPass.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao enviar o código, verifique se o email digitado é válido");
         }
 
     }

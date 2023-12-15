@@ -168,13 +168,6 @@ public class ForgotPass extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Preencha o campo!!");
         }else{
             mandarEmail(sixDigit);
-             ForgotPassVerify verif = new ForgotPassVerify();
-           verif.codeRecieved = sixDigit;
-           verif.recoverUser = emailNewPass.getText();
-           
-            verif.setVisible(true);
-            dispose();
-            JOptionPane.showMessageDialog(null, "Email enviado com sucesso!! Certifique-se de que digitou o email correto");
         }
                     }
 
@@ -251,9 +244,18 @@ public class ForgotPass extends javax.swing.JFrame {
             message.setContent(textHtml, "text/html");
 
             Transport.send(message);
+            
+            ForgotPassVerify verif = new ForgotPassVerify();
+           verif.codeRecieved = sixDigit;
+           verif.recoverUser = emailNewPass.getText();
+           
+            verif.setVisible(true);
+            dispose();
+            JOptionPane.showMessageDialog(null, "Email enviado com sucesso!! Certifique-se de que digitou o email correto");
         } catch (MessagingException ex) {
             ex.getMessage();
             Logger.getLogger(ForgotPass.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao enviar o código, verifique se o email digitado é válido");
         }
 
     }
